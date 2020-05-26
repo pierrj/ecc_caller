@@ -1,0 +1,4 @@
+### This is a temporary repository to show an example of the pipeline used to call eccDNA forming regions from eccDNA sequencing data in Magnaporthe oryzae
+### This was written by Pierre Joubert of the Krasileva lab, Department of Plant and Microbial Biology, Berkeley, CA, USA
+### These scripts use specific files and are meant as an example of what the pipeline looks like, they are not easily portable to new data
+### If you are interested in using these for your data please email pierrj@berkeley.edu
