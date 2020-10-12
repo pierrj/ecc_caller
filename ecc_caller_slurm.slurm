@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=doesnt_matter
+#SBATCH --job-name=does_not_matter
 #SBATCH --account=fc_kvkallow
 #SBATCH --partition=savio
 #SBATCH --qos=savio_normal
