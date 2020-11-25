@@ -63,6 +63,34 @@ Finally, assign confidence to each eccDNA forming region
    ```sh
    assign_confidence_nodb.sh -m mapfile -s output_name -t n_threads -b filtered.sorted.output_name.bam -r output_name.confirmedsplitreads.bed
    ```
+   
+## Outputs
+
+ecc_caller currently outputs many useful files for analysis and QC. File names need to be cleaned up a bit, update coming soon.
+
+A few important files to note:
+* filtered.sorted.output_name.bam - output from bwa mem, sorted, and filtered to scaffolds of interest
+* lengthfiltered.merged.splitreads.output_name.renamed.bed - bed file containing split reads to be used for ecc calling
+* outwardfacing.output_name.bed - bed file containing all outward facing read pairs to be used for ecc calling
+* outputname.confirmedsplitreads.bed - output from call_ecc_regions.sh, split reads confirmed by the presence of an outward facing read pair
+* ecccaller_splitreads.outputname.tsv - output from cluster_eccs.py, some clustering is preformed for highly similar eccDNA forming regions, this file shows which representative eccDNA forming region was called for each cluster of eccDNA forming regions
+* ecccaller_output.output_name.renamed.details.tsv - tsv containing location of eccDNA forming regions as well as their confidence score, reason for confidence score and depth of coverage (see below)
+* ecccaller_output.output_name.renamed.bed - bed file of all eccDNA forming regions, colored by confidence score (see below)
+
+## Confidence Scores for eccDNA Forming Regions
+
+coverage_confirm_nodb.py assigns confidence scores to each eccDNA region. These criteria can currently only be modified by changing the python script but I will eventually include this as a command line argument. These are as follows:
+* lowq - low quality, greater than 5% of the region is uncovered by mapped reads and/or only one split read is associated with this region (colored red in bed file output)
+* conf - medium confidence, 2 split reads associated with this region, coverage of the region is less than double that of the flanking regions of equal sizes (colored yellow in bed file output)
+* hconf - high confidence, 2 split reads and coverage of the region is more than double that of the flanking regions of equal sizes OR 3 or more split reads associated with this region (colored green in bed file output)
+
+## Acknowledgements
+
+Initial framework for the pipeline was inspired by the methods described in the following paper but all code in this repository is original:
+
+Møller, H.D., Mohiyuddin, M., Prada-Luengo, I. et al. Circular DNA elements of chromosomal origin are common in healthy human somatic tissue. Nat Commun 9, 1069 (2018). https://doi.org/10.1038/s41467-018-03369-8
+
+Thank you to Ksenia Krasileva and all members of the KVK lab for their feedback on progress on this pipeline.
 
 <!-- LICENSE -->
 ## License
