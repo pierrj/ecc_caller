@@ -34,7 +34,7 @@ ecc_caller contains Python scripts which were written in Python 3.8 and requires
 
 Once all software is installed with paths set and the git repository has been cloned make sure to set this path variable so the wrapper scripts know where to find the python scripts 
    ```sh
-   export ECC_CALLER_PYTHON_SCRIPTS='/path/to/git/repo/python_scripts
+   export ECC_CALLER_PYTHON_SCRIPTS=/path/to/git/repo/python_scripts
    ```
 
 ecc_caller uses a mapfile to be compatible with any genome. This mapfile should be a list of the first field of all fasta entries (scaffolds/chromosomes) of interest for the analysis. This can be all scaffolds in the original genome file or only scaffolds of interest (i.e. excluding mitochondria).
