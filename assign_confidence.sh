@@ -1,4 +1,25 @@
 #!/bin/bash
+#MIT License
+#
+#Copyright (c) 2020 Pierre Michel Joubert
+#
+#Permission is hereby granted, free of charge, to any person obtaining a copy
+#of this software and associated documentation files (the "Software"), to deal
+#in the Software without restriction, including without limitation the rights
+#to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#copies of the Software, and to permit persons to whom the Software is
+#furnished to do so, subject to the following conditions:
+#
+#The above copyright notice and this permission notice shall be included in all
+#copies or substantial portions of the Software.
+#
+#THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+#OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+#SOFTWARE.
 while getopts m:s:t:b:r: option
 do
 case "${option}"
@@ -39,14 +60,14 @@ awk -v OFS='\t' '{print $1-1, $2, $3}' parallel.plusone.confirmed > parallel.con
 
 # uses hierarchical clustering to merge highly similar confirmed eccDNA forming regions together
 # see cluster_eccs.py for more info
-python /global/home/users/pierrj/git/python/cluster_eccs.py ${SAMPLE} ${chrom_count} 10
+python ${ECC_CALLER_PYTHON_SCRIPTS}/cluster_eccs.py ${SAMPLE} ${chrom_count} 10
 
 # split confirmed eccDNA forming regions into chunks to be used with GNU parallel
 # then assign confidence to eccDNAs based off split read counts and read coverage
 # see coverage_confirm_nodb.py for more details
 shuf merged.confirmed > shuf.merged.confirmed
 split --number=l/${THREADS} --numeric-suffixes=1 shuf.merged.confirmed merged.confirmed
-parallel -j ${THREADS} --link python /global/home/users/pierrj/git/python/coverage_confirm_nodb.py ${SAMPLE} {} renamed.filtered.sorted.${SAMPLE}.bam ::: $(seq -w 1 ${THREADS})
+parallel -j ${THREADS} --link python ${ECC_CALLER_PYTHON_SCRIPTS}/coverage_confirm_nodb.py ${SAMPLE} {} renamed.filtered.sorted.${SAMPLE}.bam ::: $(seq -w 1 ${THREADS})
 
 # put parallel chunks back together
 cat $(find . -maxdepth 1 -name "ecccaller_output.${SAMPLE}.details.tsv*" | xargs -r ls -1 | tr "\n" " ") > ecccaller_output.${SAMPLE}.details.tsv
