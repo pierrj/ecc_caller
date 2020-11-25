@@ -5,13 +5,13 @@ ecc_caller is a pipeline designed to take Illumina NovaSeq paired end sequencing
 
 The pipeline uses information from two structural read variants to call eccDNA forming regions: split reads and opposite facing read pairs.
 
-It also assings a confidence score based off the number of split reads corresponding to each region as well as its coverage.
+It also assigns a confidence score based off the number of split reads corresponding to each region as well as its coverage.
 
 ## Requirements
 
 Conda installation instructions coming soon!
 
-ecc_caller requires the following software (more details and version coming soon). Make sure these are added to PATH:
+ecc_caller requires the following software (more details and versions coming soon). Make sure these are added to PATH:
 * cutadapt
 * BWA MEM
 * samtools
@@ -37,7 +37,7 @@ Once all software is installed with paths set and the git repository has been cl
    export ECC_CALLER_PYTHON_SCRIPTS=/path/to/git/repo/python_scripts
    ```
 
-ecc_caller uses a mapfile to be compatible with any genome. This mapfile should be a list of the first field of all fasta entries (scaffolds/chromosomes) of interest for the analysis. This can be all scaffolds in the original genome file or only scaffolds of interest (i.e. excluding mitochondria).
+ecc_caller uses a mapfile to work with any input genome. This mapfile should be a list of the first field of all fasta entries (scaffolds/chromosomes) of interest for the analysis. This can be all scaffolds in the original genome file or only scaffolds of interest (i.e. excluding mitochondria).
 
 Example command to create mapfile:
    ```sh
