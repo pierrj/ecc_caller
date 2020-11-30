@@ -61,7 +61,7 @@ Next call eccDNA forming regions
    
 Finally, assign confidence to each eccDNA forming region
    ```sh
-   assign_confidence_nodb.sh -m mapfile -s output_name -t n_threads -b filtered.sorted.output_name.bam -r output_name.confirmedsplitreads.bed
+   assign_confidence.sh -m mapfile -s output_name -t n_threads -b filtered.sorted.output_name.bam -r output_name.confirmedsplitreads.bed
    ```
    
 ## Outputs
