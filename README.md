@@ -17,6 +17,7 @@ ecc_caller requires the following software (more details and versions coming soo
 * samtools
 * bedtools
 * GNU parallel
+* Picard tools
 
 ecc_caller contains Python scripts which were written in Python 3.8 and requires the following modules:
 * sys
@@ -56,12 +57,12 @@ Then remove adapters and map sequencing reads
    
 Next call eccDNA forming regions
    ```sh
-   call_ecc_regions.sh -m mapfile -s output_name -t n_threads -b filtered.sorted.output_name.bam
+   call_ecc_regions.sh -m mapfile -s output_name -t n_threads -b uniq.filtered.sorted.output_name.bam -q multimapped.filtered.name_sorted.output_name.bam
    ```
    
 Finally, assign confidence to each eccDNA forming region
    ```sh
-   assign_confidence.sh -m mapfile -s output_name -t n_threads -b filtered.sorted.output_name.bam -r output_name.confirmedsplitreads.bed
+   assign_confidence.sh -m mapfile -s output_name -t n_threads -b no_secondary.filtered.sorted.output_name.bam -r output_name.confirmedsplitreads.bed
    ```
    
 ## Outputs
