@@ -40,7 +40,7 @@ done
 # -m mapfile with names of contigs of interest, as written in the fasta file used to make bwa genome database
 # -s sample name/output prefix
 # -t threads
-# -b bamfile of mapped reads, filtered to contigs of interest
+# -b bamfile of mapped reads, filtered to contigs of interest, primary alignments only
 # -r confirmed split read file, output of call_ecc_regions.sh
 
 # get chrom/scaffold count from mapfile
