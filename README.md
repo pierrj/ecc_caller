@@ -11,24 +11,18 @@ It also assigns a confidence score based off the number of split reads correspon
 
 Conda installation instructions coming soon!
 
-ecc_caller requires the following software (more details and versions coming soon). Make sure these are added to PATH:
-* cutadapt
-* BWA MEM
-* samtools
-* bedtools
-* GNU parallel
-* Picard tools
+ecc_caller requires the following software. Make sure these are added to PATH:
+* cutadapt version 2.4
+* BWA MEM version 0.7.17-r1188 
+* samtools version 1.8
+* bedtools version 2.28.0
+* GNU parallel version 20180322
+* Picard tools version 2.9.0
 
 ecc_caller contains Python scripts which were written in Python 3.7.4 and requires the following modules:
-* sys
-* collections
-* itertools
-* pandas
-* numpy
-* csv
-* scipy
-* statistics
-* subprocess
+* pandas version 0.25.1
+* numpy version 1.17.2
+* scipy version 1.4.1
 
 <!-- USAGE EXAMPLES -->
 ## Usage
