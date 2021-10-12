@@ -57,10 +57,7 @@ samtools index renamed.filtered.sorted.${SAMPLE}.bam
 # parallel.confirmed is input for cluster_eccs.py
 awk -v OFS='\t' 'NR==FNR{a[$2]=$1;next}{$1=a[$1];}1' tmp.chrom_count_and_names ${CONFIRMED_SPLITREADS} > parallel.plusone.confirmed
 awk -v OFS='\t' '{print $1-1, $2, $3}' parallel.plusone.confirmed > parallel.confirmed
-
-# uses hierarchical clustering to merge highly similar confirmed eccDNA forming regions together
-# see cluster_eccs.py for more info
-python ${ECC_CALLER_PYTHON_SCRIPTS}/cluster_eccs.py ${SAMPLE} ${chrom_count} 10
+sort -k1,1n -k2,2n parallel.confirmed | uniq -c | awk -v OFS='\t' '{print $2, $3, substr($4,0,length($4)-1), $1}' > merged.confirmed
 
 # split confirmed eccDNA forming regions into chunks to be used with GNU parallel
 # then assign confidence to eccDNAs based off split read counts and read coverage
@@ -72,19 +69,30 @@ parallel -j ${THREADS} --link python ${ECC_CALLER_PYTHON_SCRIPTS}/coverage_confi
 # put parallel chunks back together
 cat $(find . -maxdepth 1 -name "ecccaller_output.${SAMPLE}.details.tsv*" | xargs -r ls -1 | tr "\n" " ") > ecccaller_output.${SAMPLE}.details.tsv
 cat $(find . -maxdepth 1 -name "ecccaller_output.${SAMPLE}.bed*" | xargs -r ls -1 | tr "\n" " ") > ecccaller_output.${SAMPLE}.bed
+cat $(find . -maxdepth 1 -name "ecccaller_output.splitreads.${SAMPLE}.bed*" | xargs -r ls -1 | tr "\n" " ") > ecccaller_output.splitreads.${SAMPLE}.bed
 
 # rename output files to original chrom/scaffold names
 paste ${MAPFILE} tmp.chrom_count > tmp.chrom_names_and_count
 awk -v OFS='\t' 'NR==FNR{a[$2]=$1;next}{$1=a[$1];}1' tmp.chrom_names_and_count ecccaller_output.${SAMPLE}.details.tsv > ecccaller_output.${SAMPLE}.renamed.details.tsv
 awk -v OFS='\t' 'NR==FNR{a[$2]=$1;next}{$1=a[$1];}1' tmp.chrom_names_and_count ecccaller_output.${SAMPLE}.bed > ecccaller_output.${SAMPLE}.renamed.bed
+awk -v OFS='\t' 'NR==FNR{a[$2]=$1;next}{$1=a[$1];}1' tmp.chrom_names_and_count ecccaller_output.splitreads.${SAMPLE}.bed > ecccaller_output.splitreads.${SAMPLE}.renamed.bed
+
+# sort outputs
+sort -k1,1 -k2,2n ecccaller_output.${SAMPLE}.renamed.details.tsv > ${SAMPLE}.ecc_caller_out.details.txt
+sort -k1,1 -k2,2n ecccaller_output.${SAMPLE}.renamed.bed > ${SAMPLE}.ecc_caller_out.genomebrowser.bed
+sort -k1,1 -k2,2n ecccaller_output.splitreads.${SAMPLE}.renamed.bed > ${SAMPLE}.ecc_caller_out.splitreads.bed
 
 # clean up tmp files
 rm ecccaller_output.${SAMPLE}.details.tsv*
 rm ecccaller_output.${SAMPLE}.bed*
+rm ecccaller_output.splitreads.${SAMPLE}.bed*
 rm parallel.confirmed
 rm parallel.plusone.confirmed
 rm renamed.filtered.sorted.${SAMPLE}.bam
 rm renamed.filtered.sorted.${SAMPLE}.bam.bai
 rm merged.confirmed*
-
-## should probably sort outputs at the end
+rm shuf.merged.confirmed
+rm tmp.*
+rm ecccaller_output.${SAMPLE}.renamed.details.tsv
+rm ecccaller_output.${SAMPLE}.renamed.bed
+rm ecccaller_output.splitreads.${SAMPLE}.renamed.bed

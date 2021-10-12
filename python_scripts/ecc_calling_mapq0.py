@@ -24,7 +24,6 @@ import re
 import random
 from scipy.stats import gaussian_kde
 import numpy as np
-import statsmodels.api as sm
 import scipy.interpolate
 import sys
 
