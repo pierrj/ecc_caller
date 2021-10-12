@@ -19,7 +19,7 @@ ecc_caller requires the following software (more details and versions coming soo
 * GNU parallel
 * Picard tools
 
-ecc_caller contains Python scripts which were written in Python 3.8 and requires the following modules:
+ecc_caller contains Python scripts which were written in Python 3.7.4 and requires the following modules:
 * sys
 * collections
 * itertools
