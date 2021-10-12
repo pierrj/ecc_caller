@@ -11,6 +11,8 @@ It also assigns a confidence score based off the number of split reads correspon
 
 Conda installation instructions coming soon!
 
+ecc_caller was written to run in a RedHat Enterprise Linux environment with GNU bash version 4.2.46(20)-release.
+
 ecc_caller requires the following software. Make sure these are added to PATH:
 * cutadapt version 2.4
 * BWA MEM version 0.7.17-r1188 
