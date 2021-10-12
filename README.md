@@ -71,9 +71,9 @@ A few important files to note:
 * lengthfiltered.merged.splitreads.output_name.renamed.bed - bed file containing split reads to be used for ecc calling
 * outwardfacing.output_name.bed - bed file containing all outward facing read pairs to be used for ecc calling
 * outputname.confirmedsplitreads.bed - output from call_ecc_regions.sh, split reads confirmed by the presence of an outward facing read pair
-* ecccaller_splitreads.outputname.tsv - output from cluster_eccs.py, some clustering is preformed for highly similar eccDNA forming regions, this file shows which representative eccDNA forming region was called for each cluster of eccDNA forming regions
-* ecccaller_output.output_name.renamed.details.tsv - tsv containing location of eccDNA forming regions as well as their confidence score, reason for confidence score and depth of coverage (see below)
-* ecccaller_output.output_name.renamed.bed - bed file of all eccDNA forming regions, colored by confidence score (see below)
+* output_name.ecc_caller_out.details.txt - tsv containing location of eccDNA forming regions as well as their confidence score, reason for confidence score and depth of coverage (see below). Columns are, in order: chromosome, start coordinate, end coordinate, number of split reads, confidence score, explanation of confidence score call, average number of reads in region of the length of the eccDNA before; overlapping; and after.
+* output_name.ecc_caller_out.genomebrowser.bed - bed file of all eccDNA forming regions, colored by confidence score (see below)
+* output_name.ecc_caller_out.splitreads.bed - bed file with one entry per split read supporting an eccDNA forming region with a confidence score of conf or hconf
 
 ## Confidence Scores for eccDNA Forming Regions
 
