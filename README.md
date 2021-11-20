@@ -55,6 +55,7 @@ Here are some example instructions for installation through conda
    ```sh
    git clone https://github.com/pierrj/ecc_caller.git
    ```
+ 
  Finally, set paths as before:
  
     ```sh
