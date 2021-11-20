@@ -36,7 +36,31 @@ Once all software is installed with paths set and the git repository has been cl
 
 Here are some example instructions for installation through conda
 
+   ```sh
+   # create conda environment
+   conda create -n ecc_caller
 
+   # install required software
+   conda install python=3.7.4 pandas=0.25.1 numpy=1.17.2 scipy=1.4.1
+
+   conda install -c bioconda cutadapt=2.4 \
+       bedtools=2.28.0 bwa=0.7.17 samtools=1.7
+
+   conda install -c conda-forge parallel=20180322
+   ```
+ Then, download and unzip the picard files from here: https://github.com/broadinstitute/picard/releases/tag/2.9.0
+ 
+ Next you'll want to create a directory to install ecc_caller and go into it. Then, to clone this git repository simply use:
+ 
+   ```sh
+   git clone https://github.com/pierrj/ecc_caller.git
+   ```
+ Finally, set paths as before:
+ 
+    ```sh
+   export ECC_CALLER_PYTHON_SCRIPTS=/path/to/install/directory/ecc_caller/python_scripts/
+   export ECC_CALLER_PICARD=/path/to/picard/
+   ```
 
 <!-- USAGE EXAMPLES -->
 ## Usage
