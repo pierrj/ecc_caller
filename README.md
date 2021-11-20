@@ -7,13 +7,13 @@ The pipeline uses information from two structural read variants to call eccDNA f
 
 It also assigns a confidence score based off the number of split reads corresponding to each region as well as its coverage.
 
-## Requirements
+## Software requirements
 
 Conda installation instructions coming soon!
 
 ecc_caller was written to run in a RedHat Enterprise Linux environment with GNU bash version 4.2.46(20)-release.
 
-ecc_caller requires the following software. Make sure these are added to PATH:
+ecc_caller was written using the following software and versions. It is likely that ecc_caller will work with newer versions of these software but it is not guaranteed. Make sure these are added to PATH:
 * cutadapt version 2.4
 * BWA MEM version 0.7.17-r1188 
 * samtools version 1.8
@@ -31,6 +31,12 @@ Once all software is installed with paths set and the git repository has been cl
    export ECC_CALLER_PYTHON_SCRIPTS=/path/to/git/repo/python_scripts/
    export ECC_CALLER_PICARD=/path/to/picard/
    ```
+   
+## Conda installation instructions
+
+Feel free to install the above software however you can. Here are some example instructions for installation through conda
+
+
 
 <!-- USAGE EXAMPLES -->
 ## Usage
