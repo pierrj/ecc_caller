@@ -58,7 +58,7 @@ Here are some example instructions for installation through conda
  
  Finally, set paths as before:
  
-    ```sh
+   ```sh
    export ECC_CALLER_PYTHON_SCRIPTS=/path/to/install/directory/ecc_caller/python_scripts/
    export ECC_CALLER_PICARD=/path/to/picard/
    ```
