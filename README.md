@@ -37,8 +37,9 @@ Once all software is installed with paths set and the git repository has been cl
 Here are some example instructions for installation through conda
 
    ```sh
-   # create conda environment
+   # create conda environment and activate
    conda create -n ecc_caller
+   conda activate ecc_caller
 
    # install required software
    conda install python=3.7.4 pandas=0.25.1 numpy=1.17.2 scipy=1.4.1
