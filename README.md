@@ -19,7 +19,7 @@ ecc_caller was written using the following software and versions. It is likely t
 * samtools version 1.8
 * bedtools version 2.28.0
 * GNU parallel version 20180322
-* Picard tools version 2.9.0
+* Picard tools version 2.9.0 (with java version 1.8)
 
 ecc_caller contains Python scripts which were written in Python 3.7.4 and requires the following modules:
 * pandas version 0.25.1
@@ -34,7 +34,7 @@ Once all software is installed with paths set and the git repository has been cl
    
 ## Conda installation instructions
 
-Feel free to install the above software however you can. Here are some example instructions for installation through conda
+Here are some example instructions for installation through conda
 
 
 
