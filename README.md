@@ -31,6 +31,12 @@ Once all software is installed with paths set and the git repository has been cl
    export ECC_CALLER_PYTHON_SCRIPTS=/path/to/git/repo/python_scripts/
    export ECC_CALLER_PICARD=/path/to/picard/
    ```
+You will need to define these environmental variables every time you run ecc_caller. Or you could set them every time you open a shell by adding these lines to your bash profile like so:
+
+   ```sh
+   echo "export ECC_CALLER_PYTHON_SCRIPTS=/path/to/git/repo/python_scripts/" >> ~/.bash_profile
+   echo "export ECC_CALLER_PICARD=/path/to/picard/" >> ~/.bash_profile
+   ```
    
 ## Conda installation instructions
 
