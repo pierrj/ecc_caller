@@ -57,17 +57,19 @@ Here are some example instructions for installation through conda
    git clone https://github.com/pierrj/ecc_caller.git
    ```
  
- Finally, set paths as before:
+ Finally, set paths, including for ecc_caller:
  
    ```sh
    export ECC_CALLER_PYTHON_SCRIPTS=/path/to/install/directory/ecc_caller/python_scripts/
    export ECC_CALLER_PICARD=/path/to/picard/
+   export PATH="/path/to/install/directory/ecc_caller/:$PATH"
    ```
 You will need to define these environmental variables every time you run ecc_caller. Or you could set them every time you open a shell by adding these lines to your bash profile like so:
 
    ```sh
    echo "export ECC_CALLER_PYTHON_SCRIPTS=/path/to/git/repo/python_scripts/" >> ~/.bash_profile
    echo "export ECC_CALLER_PICARD=/path/to/picard/" >> ~/.bash_profile
+   echo "export PATH=/path/to/install/directory/ecc_caller/:$PATH" >> ~/.bash_profile
    ```
 
 <!-- USAGE EXAMPLES -->
