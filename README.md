@@ -49,7 +49,7 @@ Here are some example instructions for installation through conda
 
    conda install -c conda-forge parallel=20180322
    ```
- Then, download and unzip the picard files from here: https://github.com/broadinstitute/picard/releases/tag/2.9.0, then follow the instructions in the README for how to set up picard tools.
+ Then, download and unzip the picard files from here: https://github.com/broadinstitute/picard/releases/tag/2.9.0, and follow the instructions in the README for how to set up picard tools.
  
  Next you'll want to create a directory to install ecc_caller and go into it. Then, to clone this git repository simply use:
  
