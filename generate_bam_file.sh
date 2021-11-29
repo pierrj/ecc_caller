@@ -73,8 +73,8 @@ samtools sort -n -@ ${THREADS} filtered.sorted.${SAMPLE}.bam > multimapped.filte
 
 
 # remove tmp files and unfiltered files
-# tmp command should probably be more specific, or use a tmp directory
 rm tmp*
 rm ${SAMPLE}.mergedandpe.bwamem.bam
 rm filtered.sorted.${SAMPLE}.bam
 rm ${SAMPLE}.sorted.mergedandpe.bwamem.bam
+rm ${SAMPLE}.sorted.mergedandpe.bwamem.bam.bai

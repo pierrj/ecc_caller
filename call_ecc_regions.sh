@@ -358,6 +358,7 @@ paste ${MAPFILE} tmp.chrom_count > tmp.chrom_names_and_count
 awk -v OFS='\t' '{print $1+1, $2, $3}' parallel.confirmed > parallel.plusone.confirmed
 awk -v OFS='\t' 'NR==FNR{a[$2]=$1;next}{$1=a[$1];}1' tmp.chrom_names_and_count parallel.plusone.confirmed > ${SAMPLE}.confirmedsplitreads.bed
 
+# rm temp files
 rm parallel.confirmed*
 rm dsn.unique_parallel.confirmed
 rm unique_parallel.confirmed
@@ -373,3 +374,11 @@ rm mapq0_single_unique_choices.renamed.*
 rm multimapped_splitreads.*
 rm merged.splitreads.${SAMPLE}.bed
 rm split_line_fix.*
+rm *multimapped_splitreads*
+rm outwardfacing*
+rm singleunique_choices
+rm multi_mapping.outwardfacing.${SAMPLE}.*
+rm sorted.grouped.*
+rm sorted.multi_mapping.*
+rm sorted.outwardfacing.*
+rm splitreads.${SAMPLE}.bed
