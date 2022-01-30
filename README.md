@@ -87,7 +87,7 @@ Before mapping, remember to create a bwa index of your genome:
    bwa index -p genome_bwa genome.fasta 
    ```
 
-Then remove adapters and map sequencing reads
+Then remove adapters and map sequencing reads. NOTE: "output_name" should be a string here, not a path to file, otherwise this command will fail.
    ```sh
    generate_bam_file.sh -g genome_bwa -1 R1.fastq -2 R2.fastq -s output_name -t n_threads -m mapfile
    ```
