@@ -102,6 +102,8 @@ Finally, assign confidence to each eccDNA forming region
    assign_confidence.sh -m mapfile -s output_name -t n_threads -b no_secondary.filtered.sorted.output_name.bam -r output_name.confirmedsplitreads.bed
    ```
    
+All output files are written to the current directory.
+
 ## Outputs
 
 ecc_caller currently outputs many useful files for analysis and QC. File names need to be cleaned up a bit, update coming soon.
