@@ -63,8 +63,8 @@ sort -k1,1n -k2,2n parallel.confirmed | uniq -c | awk -v OFS='\t' '{print $2, $3
 # then assign confidence to eccDNAs based off split read counts and read coverage
 # see coverage_confirm_nodb.py for more details
 shuf merged.confirmed > shuf.merged.confirmed
-split --number=l/${THREADS} --numeric-suffixes=1 shuf.merged.confirmed merged.confirmed
-parallel -j ${THREADS} --link python ${ECC_CALLER_PYTHON_SCRIPTS}/coverage_confirm_nodb.py ${SAMPLE} {} renamed.filtered.sorted.${SAMPLE}.bam ::: $(seq -w 1 ${THREADS})
+split -a 3 --number=l/${THREADS} --numeric-suffixes=1 shuf.merged.confirmed merged.confirmed
+parallel -j ${THREADS} --link python ${ECC_CALLER_PYTHON_SCRIPTS}/coverage_confirm_nodb.py ${SAMPLE} {} renamed.filtered.sorted.${SAMPLE}.bam ::: $(seq -f "%03g" 1 ${THREADS})
 
 # put parallel chunks back together
 cat $(find . -maxdepth 1 -name "ecccaller_output.${SAMPLE}.details.tsv*" | xargs -r ls -1 | tr "\n" " ") > ecccaller_output.${SAMPLE}.details.tsv

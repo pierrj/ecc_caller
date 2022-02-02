@@ -140,7 +140,7 @@ cat tmp.oriented.samechromosome.exactlytwice.qualityfiltered.reverseread1.${SAMP
     tmp.oriented.samechromosome.exactlytwice.qualityfiltered.forwardmerged.${SAMPLE}.sam > tmp.oriented.samechromosome.exactlytwice.qualityfiltered.all.${SAMPLE}.sam
 
 # verify that the match lengths on either side match up so that only proper split reads are looked on
-python ${ECC_CALLER_PYTHON_SCRIPTS}filter_for_match_lengths.py tmp.oriented.samechromosome.exactlytwice.qualityfiltered.all.${SAMPLE}.sam tmp.match_length_filtered.oriented.samechromosome.exactlytwice.qualityfiltered.all.${SAMPLE}.sam
+python ${ECC_CALLER_PYTHON_SCRIPTS}/filter_for_match_lengths.py tmp.oriented.samechromosome.exactlytwice.qualityfiltered.all.${SAMPLE}.sam tmp.match_length_filtered.oriented.samechromosome.exactlytwice.qualityfiltered.all.${SAMPLE}.sam
 
 # converting to bed file
 samtools view -b -h <(cat <(samtools view -H ${FILTERED_BAMFILE}) tmp.match_length_filtered.oriented.samechromosome.exactlytwice.qualityfiltered.all.${SAMPLE}.sam) > tmp.oriented.samechromosome.exactlytwice.qualityfiltered.all.${SAMPLE}.bam
@@ -190,8 +190,8 @@ awk -v OFS='\t' '{
 # use GNU parallel to speed things up
 # split into chunks first then each thread works on a chunk
 # parallel.confirmed are split reads confirmed by opposite facing read pairs
-split --number=l/${THREADS} --numeric-suffixes=1 --additional-suffix=.bed lengthfiltered.merged.splitreads.${SAMPLE}.renamed.bed lengthfiltered.merged.splitreads.${SAMPLE}.renamed.
-parallel -j ${THREADS} --link python ${ECC_CALLER_PYTHON_SCRIPTS}ecc_caller_anygenome_confirmsrs_numpy_gnuparallel.py lengthfiltered.merged.splitreads.${SAMPLE}.renamed.{}.bed sorted.grouped.outwardfacing.${SAMPLE}.renamed.bed ${SAMPLE} ${chrom_count} {} ::: $(seq -w 1 ${THREADS})
+split -a 3 --number=l/${THREADS} --numeric-suffixes=1 --additional-suffix=.bed lengthfiltered.merged.splitreads.${SAMPLE}.renamed.bed lengthfiltered.merged.splitreads.${SAMPLE}.renamed.
+parallel -j ${THREADS} --link python ${ECC_CALLER_PYTHON_SCRIPTS}/ecc_caller_anygenome_confirmsrs_numpy_gnuparallel.py lengthfiltered.merged.splitreads.${SAMPLE}.renamed.{}.bed sorted.grouped.outwardfacing.${SAMPLE}.renamed.bed ${SAMPLE} ${chrom_count} {} ::: $(seq -f "%03g" 1 ${THREADS})
 cat $(find . -maxdepth 1 -name "parallel.confirmed*" | xargs -r ls -1 | tr "\n" " ") > parallel.confirmed
 
 mv parallel.confirmed unique_parallel.confirmed
@@ -298,14 +298,14 @@ cat ${SAMPLE}.sorted.mergedandpe.bwamem.multimapped_splitreads.doublemapq0.1.bed
 
 
 # split files into chunks for parallelization and fix chunks so that a read name isnt present in two chunks
-split --number=l/${THREADS} --numeric-suffixes=1 --additional-suffix=.bed ${SAMPLE}.sorted.mergedandpe.bwamem.multimapped_splitreads.doublemapq0.bed ${SAMPLE}.sorted.mergedandpe.bwamem.multimapped_splitreads.doublemapq0.chunk.
+split -a 3 --number=l/${THREADS} --numeric-suffixes=1 --additional-suffix=.bed ${SAMPLE}.sorted.mergedandpe.bwamem.multimapped_splitreads.doublemapq0.bed ${SAMPLE}.sorted.mergedandpe.bwamem.multimapped_splitreads.doublemapq0.chunk.
 
-for i in $(seq -w 1 1 $THREADS); do
-    python ${ECC_CALLER_PYTHON_SCRIPTS}split_chunk_fixer.py ${SAMPLE}.sorted.mergedandpe.bwamem.multimapped_splitreads.doublemapq0.chunk.${i}.bed ${i}
+for i in $(seq -f "%03g" 1 1 $THREADS); do
+    python ${ECC_CALLER_PYTHON_SCRIPTS}/split_chunk_fixer.py ${SAMPLE}.sorted.mergedandpe.bwamem.multimapped_splitreads.doublemapq0.chunk.${i}.bed ${i}
 done
 
-seq -w 1 1 $((THREADS-1)) > tmp.seq
-seq -w 2 1 ${THREADS} > tmp.seq_plusone
+seq -f "%03g" 1 1 $((THREADS-1)) > tmp.seq
+seq -f "%03g" 2 1 ${THREADS} > tmp.seq_plusone
 paste tmp.seq tmp.seq_plusone > tmp.seqs
 
 while IFS=$'\t' read -r i next; do
@@ -315,9 +315,9 @@ done < tmp.seqs
 cp ${SAMPLE}.sorted.mergedandpe.bwamem.multimapped_splitreads.doublemapq0.chunk.${THREADS}.bed multimapped_splitreads.${THREADS}.bed
 
 # run through python script which calls putative eccdna forming regions from multimapping reads based off the length distribution from uniquely mapped eccDNAs
-parallel -j ${THREADS} --link python ${ECC_CALLER_PYTHON_SCRIPTS}ecc_calling_mapq0.py dsn.unique_parallel.confirmed  multimapped_splitreads.{}.bed 50000 {} ::: $(seq -w 1 ${THREADS})
+parallel -j ${THREADS} --link python ${ECC_CALLER_PYTHON_SCRIPTS}/ecc_calling_mapq0.py dsn.unique_parallel.confirmed  multimapped_splitreads.{}.bed 50000 {} ::: $(seq -f "%03g" 1 ${THREADS})
 
-python ${ECC_CALLER_PYTHON_SCRIPTS}ecc_calling_mapq0_singleunique.py dsn.unique_parallel.confirmed ${SAMPLE}.sorted.mergedandpe.bwamem.multimapped_splitreads.singleunique.bed 50000
+python ${ECC_CALLER_PYTHON_SCRIPTS}/ecc_calling_mapq0_singleunique.py dsn.unique_parallel.confirmed ${SAMPLE}.sorted.mergedandpe.bwamem.multimapped_splitreads.singleunique.bed 50000
 
 # merge all chunks together then confirm as before
 cat mapq0_choices.* singleunique_choices > mapq0_single_unique_choices.bed
@@ -344,8 +344,8 @@ awk -v OFS='\t' '{
     }
 }' sorted.multi_mapping.outwardfacing.${SAMPLE}.renamed.bed > sorted.grouped.multi_mapping.outwardfacing.${SAMPLE}.renamed.bed
 
-split --number=l/${THREADS} --numeric-suffixes=1 --additional-suffix=.bed mapq0_single_unique_choices.renamed.bed mapq0_single_unique_choices.renamed.
-parallel -j ${THREADS} --link python ${ECC_CALLER_PYTHON_SCRIPTS}ecc_caller_anygenome_confirmsrs_numpy_gnuparallel.py mapq0_single_unique_choices.renamed.{}.bed sorted.grouped.multi_mapping.outwardfacing.${SAMPLE}.renamed.bed ${SAMPLE} ${chrom_count} {} ::: $(seq -w 1 ${THREADS})
+split -a 3 --number=l/${THREADS} --numeric-suffixes=1 --additional-suffix=.bed mapq0_single_unique_choices.renamed.bed mapq0_single_unique_choices.renamed.
+parallel -j ${THREADS} --link python ${ECC_CALLER_PYTHON_SCRIPTS}/ecc_caller_anygenome_confirmsrs_numpy_gnuparallel.py mapq0_single_unique_choices.renamed.{}.bed sorted.grouped.multi_mapping.outwardfacing.${SAMPLE}.renamed.bed ${SAMPLE} ${chrom_count} {} ::: $(seq -f "%03g" 1 ${THREADS})
 cat $(find . -maxdepth 1 -name "parallel.confirmed*" | xargs -r ls -1 | tr "\n" " ") > parallel.confirmed
 
 mv parallel.confirmed mapq0_parallel.confirmed
