@@ -258,28 +258,28 @@ samtools view -b -f 65 -F 4 ${FILTERED_BAMFILE_QSORTED} > tmp.filtered.sorted.al
 samtools view -b -f 129 -F 4 ${FILTERED_BAMFILE_QSORTED} > tmp.filtered.sorted.allmapq.mapped.2.${SAMPLE}.bam
 
 # use picard filter sam reads to extract split reads identified above and all their possible secondary alignnents
-java -jar ${ECC_CALLER_PICARD}picard.jar FilterSamReads \
+java -jar ${ECC_CALLER_PICARD}/picard.jar FilterSamReads \
         INPUT=tmp.filtered.sorted.allmapq.mapped.1.${SAMPLE}.bam \
         OUTPUT=${SAMPLE}.sorted.mergedandpe.bwamem.multimapped_splitreads.singleunique.1.bam \
         READ_LIST_FILE=tmp.singleunique.readnames.1 \
         FILTER=includeReadList \
         SORT_ORDER=unsorted
 
-java -jar ${ECC_CALLER_PICARD}picard.jar FilterSamReads \
+java -jar ${ECC_CALLER_PICARD}/picard.jar FilterSamReads \
         INPUT=tmp.filtered.sorted.allmapq.mapped.2.${SAMPLE}.bam \
         OUTPUT=${SAMPLE}.sorted.mergedandpe.bwamem.multimapped_splitreads.singleunique.2.bam \
         READ_LIST_FILE=tmp.singleunique.readnames.2 \
         FILTER=includeReadList \
         SORT_ORDER=unsorted
 
-java -jar ${ECC_CALLER_PICARD}picard.jar FilterSamReads \
+java -jar ${ECC_CALLER_PICARD}/picard.jar FilterSamReads \
         INPUT=tmp.filtered.sorted.allmapq.mapped.1.${SAMPLE}.bam \
         OUTPUT=${SAMPLE}.sorted.mergedandpe.bwamem.multimapped_splitreads.doublemapq0.1.bam \
         READ_LIST_FILE=tmp.doublemapq0.readnames.1 \
         FILTER=includeReadList \
         SORT_ORDER=unsorted
 
-java -jar ${ECC_CALLER_PICARD}picard.jar FilterSamReads \
+java -jar ${ECC_CALLER_PICARD}/picard.jar FilterSamReads \
         INPUT=tmp.filtered.sorted.allmapq.mapped.2.${SAMPLE}.bam \
         OUTPUT=${SAMPLE}.sorted.mergedandpe.bwamem.multimapped_splitreads.doublemapq0.2.bam \
         READ_LIST_FILE=tmp.doublemapq0.readnames.2 \
