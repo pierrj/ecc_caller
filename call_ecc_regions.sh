@@ -312,7 +312,9 @@ while IFS=$'\t' read -r i next; do
     cat ${SAMPLE}.sorted.mergedandpe.bwamem.multimapped_splitreads.doublemapq0.chunk.${i}.bed split_line_fix.${next} > multimapped_splitreads.${i}.bed
 done < tmp.seqs
 
-cp ${SAMPLE}.sorted.mergedandpe.bwamem.multimapped_splitreads.doublemapq0.chunk.${THREADS}.bed multimapped_splitreads.${THREADS}.bed
+threads_padded=$(printf "%03d\n" ${THREADS})
+
+cp ${SAMPLE}.sorted.mergedandpe.bwamem.multimapped_splitreads.doublemapq0.chunk.${threads_padded}.bed multimapped_splitreads.${threads_padded}.bed
 
 # run through python script which calls putative eccdna forming regions from multimapping reads based off the length distribution from uniquely mapped eccDNAs
 parallel -j ${THREADS} --link python ${ECC_CALLER_PYTHON_SCRIPTS}/ecc_calling_mapq0.py dsn.unique_parallel.confirmed  multimapped_splitreads.{}.bed 50000 {} ::: $(seq -f "%03g" 1 ${THREADS})
