@@ -7,6 +7,9 @@ The pipeline uses information from two structural read variants to call eccDNA f
 
 It also assigns a confidence score based off the number of split reads corresponding to each region as well as its coverage.
 
+More detail on the pipeline is included in this preprint:
+https://www.biorxiv.org/content/10.1101/2021.10.12.464130v1
+
 ## Software requirements
 
 Conda installation instructions coming soon!
