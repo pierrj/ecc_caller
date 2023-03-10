@@ -12,8 +12,6 @@ More detail on the pipeline is included in this manuscript:
 
 ## Software requirements
 
-Conda installation instructions coming soon!
-
 ecc_caller was written to run in a RedHat Enterprise Linux environment with GNU bash version 4.2.46(20)-release.
 
 ecc_caller was written using the following software and versions. It is likely that ecc_caller will work with newer versions of these software but it is not guaranteed. Make sure these are added to PATH:
