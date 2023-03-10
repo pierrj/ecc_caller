@@ -7,8 +7,8 @@ The pipeline uses information from two structural read variants to call eccDNA f
 
 It also assigns a confidence score based off the number of split reads corresponding to each region as well as its coverage.
 
-More detail on the pipeline is included in this preprint:
-https://www.biorxiv.org/content/10.1101/2021.10.12.464130v1
+More detail on the pipeline is included in this manuscript:
+[The extrachromosomal circular DNAs of the rice blast pathogen Magnaporthe oryzae contain a wide variety of LTR retrotransposons, genes, and effectors](https://bmcbiol.biomedcentral.com/articles/10.1186/s12915-022-01457-2)
 
 ## Software requirements
 
